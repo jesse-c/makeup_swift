@@ -16,7 +16,10 @@ defmodule MakeupSwift.MixProject do
   end
 
   def application do
-    []
+    [
+      extra_applications: [],
+      mod: {Makeup.Lexers.SwiftLexer.Application, []}
+    ]
   end
 
   defp deps do
