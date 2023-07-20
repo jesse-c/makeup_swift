@@ -33,8 +33,6 @@ defmodule Makeup.Lexers.SwiftLexer do
       concat(line_feed, carriage_return)
     ])
 
-  line = repeat(lookahead_not(line_break) |> utf8_string([], 1))
-
   # Whitespace
   whitespace_item = [?\r, ?\s, ?\n, ?\f]
   whitespace = whitespace_item |> ascii_string(min: 1) |> token(:whitespace)
@@ -85,7 +83,6 @@ defmodule Makeup.Lexers.SwiftLexer do
   integer_literal = decimal_literal |> token(:number_integer)
 
   ### Float
-  sign = choice([string("+"), string("-")])
   decimal_fraction = concat(string("."), decimal_literal)
   floating_point_literal = concat(decimal_literal, decimal_fraction) |> token(:number_float)
 
