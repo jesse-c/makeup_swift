@@ -24,6 +24,7 @@ defmodule MakeupSwift.MixProject do
 
   defp deps do
     [
+      {:ex_doc, "~> 0.30.3", only: :dev, runtime: false},
       {:makeup, "~> 1.1"},
       {:nimble_parsec, "~> 1.3"}
     ]
