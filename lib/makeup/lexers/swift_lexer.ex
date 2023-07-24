@@ -13,14 +13,14 @@ defmodule Makeup.Lexers.SwiftLexer do
 
   @behaviour Makeup.Lexer
 
-  ###################################################################
-  # Step #1: tokenize the input (into a list of tokens)
-  ###################################################################
+  ###############################################################################
+  # Step #1: tokenize the input (into a list of tokens)                         #
+  ###############################################################################
 
   @inline Application.compile_env(:makeup_html, :inline, false)
 
   # -----------------------------------------------------------------------------
-  # Lines
+  # Lines                                                                       |
   # -----------------------------------------------------------------------------
 
   # LF/U+000A
@@ -36,24 +36,26 @@ defmodule Makeup.Lexers.SwiftLexer do
     ])
 
   # -----------------------------------------------------------------------------
-  # Whitespace
+  # Whitespace                                                                  |
   # -----------------------------------------------------------------------------
 
   whitespace_item = [?\r, ?\s, ?\n, ?\f]
   whitespace = whitespace_item |> ascii_string(min: 1) |> token(:whitespace)
 
   # -----------------------------------------------------------------------------
-  # Literals
-  #
-  # A literal is the source code representation of a value of a type, such as a number or string.
-  #
-  # The following are examples of literals:
-  #
-  # 42               // Integer literal
-  # 3.14159          // Floating-point literal
-  # "Hello, world!"  // String literal
-  # /Hello, .*/      // Regular expression literal
-  # true             // Boolean literal
+  # Literals                                                                    |
+  # -----------------------------------------------------------------------------
+  #                                                                             |
+  # A literal is the source code representation of a value of a type, such as a |
+  # number or string.                                                           |
+  #                                                                             |
+  # The following are examples of literals:                                     |
+  #                                                                             |
+  # 42               // Integer literal                                         |
+  # 3.14159          // Floating-point literal                                  |
+  # "Hello, world!"  // String literal                                          |
+  # /Hello, .*/      // Regular expression literal                              |
+  # true             // Boolean literal                                         |
   # -----------------------------------------------------------------------------
 
   ## String
@@ -110,7 +112,7 @@ defmodule Makeup.Lexers.SwiftLexer do
     ])
 
   # ------------------------------------------------------------------------------
-  # Comments
+  # Comments                                                                     |
   # ------------------------------------------------------------------------------
 
   comment_text = utf8_string([], 1)
@@ -130,7 +132,7 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> token(:comment_multiline)
 
   # -----------------------------------------------------------------------------
-  # Identifiers
+  # Identifiers                                                                 |
   # -----------------------------------------------------------------------------
 
   backtick = utf8_char([?`])
@@ -149,7 +151,7 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> token(:name)
 
   # -----------------------------------------------------------------------------
-  # Keywords
+  # Keywords                                                                    |
   # -----------------------------------------------------------------------------
 
   @keywords_declarations ~w[associatedtype class deinit enum extension fileprivate func import init inout internal let open operator private precedencegroup protocol public rethrows static struct subscript typealias var]
@@ -171,7 +173,7 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> token(:keyword)
 
   # -----------------------------------------------------------------------------
-  # Punctuation
+  # Punctuation                                                                 |
   # -----------------------------------------------------------------------------
 
   punctuation =
@@ -182,7 +184,7 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> token(:punctuation)
 
   # -----------------------------------------------------------------------------
-  # Operators
+  # Operators                                                                   |
   # -----------------------------------------------------------------------------
 
   operator_head = ascii_char([?/, ?=, ?-, ?+, ?!, ?*, ?%, ?<, ?>, ?&, ?|, ?^, ?~, ??])
@@ -194,7 +196,7 @@ defmodule Makeup.Lexers.SwiftLexer do
   postfix_operator = operator
 
   # -----------------------------------------------------------------------------
-  # Root
+  # Root                                                                        |
   # -----------------------------------------------------------------------------
 
   root_element_combinator =
@@ -218,11 +220,9 @@ defmodule Makeup.Lexers.SwiftLexer do
       postfix_operator
     ])
 
-  ##############################################################################
   # Semi-public API: these two functions can be used by someone who wants to
   # embed this lexer into another lexer, but other than that, they are not
   # meant to be used by end-users
-  ##############################################################################
 
   @doc false
   def __as_swift_language__({ttype, meta, value}) do
@@ -243,18 +243,18 @@ defmodule Makeup.Lexers.SwiftLexer do
     inline: @inline
   )
 
-  ###################################################################
-  # Step #2: postprocess the list of tokens
-  ###################################################################
+  ###############################################################################
+  # Step #2: postprocess the list of tokens                                     #
+  ###############################################################################
 
   @impl Makeup.Lexer
   def postprocess(tokens, _opts \\ []) do
     tokens
   end
 
-  #######################################################################
-  # Step #3: highlight matching delimiters
-  #######################################################################
+  ###############################################################################
+  # Step #3: highlight matching delimiters                                      #
+  ###############################################################################
 
   @impl Makeup.Lexer
   defgroupmatcher(:match_groups, [])
