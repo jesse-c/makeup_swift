@@ -167,6 +167,10 @@ defmodule Makeup.Lexers.SwiftLexerTest do
       assert SwiftLexer.lex(~s(Double)) == [{:keyword_type, %{language: :swift}, 'Double'}]
     end
 
+    test "type Float" do
+      assert SwiftLexer.lex(~s(Float)) == [{:keyword_type, %{language: :swift}, 'Float'}]
+    end
+
     test "type String" do
       assert SwiftLexer.lex(~s(String)) == [{:keyword_type, %{language: :swift}, 'String'}]
     end
