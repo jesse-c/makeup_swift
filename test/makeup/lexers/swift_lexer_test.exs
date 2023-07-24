@@ -102,5 +102,9 @@ defmodule Makeup.Lexers.SwiftLexerTest do
     test "identifier starting with underscore" do
       assert SwiftLexer.lex(~s(_gender)) == [{:name, %{language: :swift}, '_gender'}]
     end
+
+    test "identifier for a reserved word in backticks" do
+      assert SwiftLexer.lex(~s(`class`)) == [{:name, %{language: :swift}, '`class`'}]
+    end
   end
 end

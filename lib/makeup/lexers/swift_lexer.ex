@@ -132,6 +132,8 @@ defmodule Makeup.Lexers.SwiftLexer do
   # Identifiers
   # -----------------------------------------------------------------------------
 
+  backtick = utf8_char([?`])
+
   identifier_head = utf8_char([?a..?z, ?A..?Z, ?_])
 
   identifier_character = choice([identifier_head, utf8_char([?0..?9])])
@@ -139,8 +141,10 @@ defmodule Makeup.Lexers.SwiftLexer do
   identifier_characters = repeat(identifier_character)
 
   identifier =
-    identifier_head
+    optional(backtick)
+    |> concat(identifier_head)
     |> concat(optional(identifier_characters))
+    |> concat(optional(backtick))
     |> token(:name)
 
   # -----------------------------------------------------------------------------
