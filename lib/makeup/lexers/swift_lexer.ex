@@ -129,6 +129,21 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> token(:comment_multiline)
 
   # -----------------------------------------------------------------------------
+  # Identifiers
+  # -----------------------------------------------------------------------------
+
+  identifier_head = utf8_char([?a..?z, ?A..?Z, ?_])
+
+  identifier_character = choice([identifier_head, utf8_char([?0..?9])])
+
+  identifier_characters = repeat(identifier_character)
+
+  identifier =
+    identifier_head
+    |> concat(optional(identifier_characters))
+    |> token(:name)
+
+  # -----------------------------------------------------------------------------
   # Root
   # -----------------------------------------------------------------------------
 
@@ -140,19 +155,21 @@ defmodule Makeup.Lexers.SwiftLexer do
       literal,
       # Comments
       inline_comment,
-      multiline_comment
+      multiline_comment,
+      # Identifiers
+      identifier
     ])
-
-  @doc false
-  def __as_swift_language__({ttype, meta, value}) do
-    {ttype, Map.put(meta, :language, :swift), value}
-  end
 
   ##############################################################################
   # Semi-public API: these two functions can be used by someone who wants to
   # embed this lexer into another lexer, but other than that, they are not
   # meant to be used by end-users
   ##############################################################################
+
+  @doc false
+  def __as_swift_language__({ttype, meta, value}) do
+    {ttype, Map.put(meta, :language, :swift), value}
+  end
 
   @impl Makeup.Lexer
   defparsec(

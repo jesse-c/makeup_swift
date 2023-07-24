@@ -94,5 +94,13 @@ defmodule Makeup.Lexers.SwiftLexerTest do
                {:number_float, %{language: :swift}, ["28", ".", "04"]}
              ]
     end
+
+    test "identifier starting with alpha" do
+      assert SwiftLexer.lex(~s(age)) == [{:name, %{language: :swift}, 'age'}]
+    end
+
+    test "identifier starting with underscore" do
+      assert SwiftLexer.lex(~s(_gender)) == [{:name, %{language: :swift}, '_gender'}]
+    end
   end
 end
