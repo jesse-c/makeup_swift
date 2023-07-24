@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Features
+
+- Add Any and Self types
+- Add Int, UInt, UInt32, UInt64, Double, String types
+- Add Float type
+
+### Miscellaneous Tasks
+
+- Add mix task for changelog generation
+
 ## [0.0.2] - 2023-07-24
 
 ### Bug Fixes
