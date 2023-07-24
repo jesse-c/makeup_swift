@@ -19,7 +19,9 @@ defmodule Makeup.Lexers.SwiftLexer do
 
   @inline Application.compile_env(:makeup_html, :inline, false)
 
+  # -----------------------------------------------------------------------------
   # Lines
+  # -----------------------------------------------------------------------------
 
   # LF/U+000A
   line_feed = ascii_char([?\n])
@@ -33,10 +35,13 @@ defmodule Makeup.Lexers.SwiftLexer do
       concat(line_feed, carriage_return)
     ])
 
+  # -----------------------------------------------------------------------------
   # Whitespace
+  # -----------------------------------------------------------------------------
   whitespace_item = [?\r, ?\s, ?\n, ?\f]
   whitespace = whitespace_item |> ascii_string(min: 1) |> token(:whitespace)
 
+  # -----------------------------------------------------------------------------
   # Literals
   #
   # A literal is the source code representation of a value of a type, such as a number or string.
@@ -48,6 +53,7 @@ defmodule Makeup.Lexers.SwiftLexer do
   # "Hello, world!"  // String literal
   # /Hello, .*/      // Regular expression literal
   # true             // Boolean literal
+  # -----------------------------------------------------------------------------
 
   ## String
   quoted_text_item = utf8_string([], 1)
@@ -102,7 +108,10 @@ defmodule Makeup.Lexers.SwiftLexer do
       numeric_literal
     ])
 
+  # ------------------------------------------------------------------------------
   # Comments
+  # ------------------------------------------------------------------------------
+
   comment_text = utf8_string([], 1)
 
   ## Inline
@@ -119,7 +128,9 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> many_surrounded_by("/*", "*/")
     |> token(:comment_multiline)
 
+  # -----------------------------------------------------------------------------
   # Root
+  # -----------------------------------------------------------------------------
 
   root_element_combinator =
     choice([
