@@ -146,5 +146,29 @@ defmodule Makeup.Lexers.SwiftLexerTest do
     test "type Any" do
       assert SwiftLexer.lex(~s(Any)) == [{:keyword_type, %{language: :swift}, "Any"}]
     end
+
+    test "type Int" do
+      assert SwiftLexer.lex(~s(Int)) == [{:keyword_type, %{language: :swift}, 'Int'}]
+    end
+
+    test "type UInt" do
+      assert SwiftLexer.lex(~s(UInt)) == [{:keyword_type, %{language: :swift}, 'UInt'}]
+    end
+
+    test "type UInt32" do
+      assert SwiftLexer.lex(~s(UInt32)) == [{:keyword_type, %{language: :swift}, 'UInt32'}]
+    end
+
+    test "type UInt64" do
+      assert SwiftLexer.lex(~s(UInt64)) == [{:keyword_type, %{language: :swift}, 'UInt64'}]
+    end
+
+    test "type Double" do
+      assert SwiftLexer.lex(~s(Double)) == [{:keyword_type, %{language: :swift}, 'Double'}]
+    end
+
+    test "type String" do
+      assert SwiftLexer.lex(~s(String)) == [{:keyword_type, %{language: :swift}, 'String'}]
+    end
   end
 end

@@ -251,6 +251,10 @@ defmodule Makeup.Lexers.SwiftLexer do
 
   defp postprocess_helper([]), do: []
 
+  defp postprocess_helper([{:name, attrs, text} | tokens])
+       when text in ['Int', 'UInt', 'UInt32', 'UInt64', 'Double', 'String'],
+       do: [{:keyword_type, attrs, text} | postprocess_helper(tokens)]
+
   defp postprocess_helper([{:keyword, attrs, text} | tokens]) when text in ["Any", "Self"],
     do: [{:keyword_type, attrs, text} | postprocess_helper(tokens)]
 
