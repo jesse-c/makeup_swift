@@ -8,6 +8,7 @@ defmodule MakeupSwift.MixProject do
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      aliases: aliases(),
       description: description(),
       package: package(),
       source_url: "https://github.com/jesse-c/makeup_swift",
@@ -28,6 +29,10 @@ defmodule MakeupSwift.MixProject do
       {:makeup, "~> 1.1"},
       {:nimble_parsec, "~> 1.3"}
     ]
+  end
+
+  defp aliases do
+    [changelog: ["cmd git cliff -o CHANGELOG.md"]]
   end
 
   defp description do
