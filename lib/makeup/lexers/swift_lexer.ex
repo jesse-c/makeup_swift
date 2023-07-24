@@ -182,6 +182,18 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> token(:punctuation)
 
   # -----------------------------------------------------------------------------
+  # Operators
+  # -----------------------------------------------------------------------------
+
+  operator_head = ascii_char([?/, ?=, ?-, ?+, ?!, ?*, ?%, ?<, ?>, ?&, ?|, ?^, ?~, ??])
+  operator_character = operator_head
+  operator_characters = operator_character |> concat(optional(operator_character))
+  operator = operator_head |> concat(optional(operator_characters)) |> token(:operator)
+  infix_operator = operator
+  prefix_operator = operator
+  postfix_operator = operator
+
+  # -----------------------------------------------------------------------------
   # Root
   # -----------------------------------------------------------------------------
 
@@ -199,7 +211,11 @@ defmodule Makeup.Lexers.SwiftLexer do
       # Identifiers
       identifier,
       # Punctuation
-      punctuation
+      punctuation,
+      # Operators
+      infix_operator,
+      prefix_operator,
+      postfix_operator
     ])
 
   ##############################################################################

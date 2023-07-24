@@ -134,5 +134,9 @@ defmodule Makeup.Lexers.SwiftLexerTest do
     test "punctuation multiple characters" do
       assert SwiftLexer.lex(~s(->)) == [{:punctuation, %{language: :swift}, "->"}]
     end
+
+    test "operator infix" do
+      assert SwiftLexer.lex(~s(+)) == [{:operator, %{language: :swift}, 43}]
+    end
   end
 end
