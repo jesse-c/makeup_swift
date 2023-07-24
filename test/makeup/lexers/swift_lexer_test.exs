@@ -120,7 +120,7 @@ defmodule Makeup.Lexers.SwiftLexerTest do
     end
 
     test "keyword type" do
-      assert SwiftLexer.lex(~s(Any)) == [{:keyword, %{language: :swift}, "Any"}]
+      assert SwiftLexer.lex(~s(catch)) == [{:keyword, %{language: :swift}, "catch"}]
     end
 
     test "keyword number sign" do
@@ -137,6 +137,14 @@ defmodule Makeup.Lexers.SwiftLexerTest do
 
     test "operator infix" do
       assert SwiftLexer.lex(~s(+)) == [{:operator, %{language: :swift}, 43}]
+    end
+
+    test "type Self" do
+      assert SwiftLexer.lex(~s(Self)) == [{:keyword_type, %{language: :swift}, "Self"}]
+    end
+
+    test "type Any" do
+      assert SwiftLexer.lex(~s(Any)) == [{:keyword_type, %{language: :swift}, "Any"}]
     end
   end
 end

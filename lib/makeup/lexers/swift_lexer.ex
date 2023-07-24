@@ -247,10 +247,18 @@ defmodule Makeup.Lexers.SwiftLexer do
   # Step #2: postprocess the list of tokens                                     #
   ###############################################################################
 
+  defp postprocess_helper(tokens)
+
+  defp postprocess_helper([]), do: []
+
+  defp postprocess_helper([{:keyword, attrs, text} | tokens]) when text in ["Any", "Self"],
+    do: [{:keyword_type, attrs, text} | postprocess_helper(tokens)]
+
+  # Otherwise, don't do anything with the current token and go to the next token.
+  defp postprocess_helper([token | tokens]), do: [token | postprocess_helper(tokens)]
+
   @impl Makeup.Lexer
-  def postprocess(tokens, _opts \\ []) do
-    tokens
-  end
+  def postprocess(tokens, _opts \\ []), do: postprocess_helper(tokens)
 
   ###############################################################################
   # Step #3: highlight matching delimiters                                      #
