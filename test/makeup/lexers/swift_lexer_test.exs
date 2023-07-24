@@ -126,5 +126,13 @@ defmodule Makeup.Lexers.SwiftLexerTest do
     test "keyword number sign" do
       assert SwiftLexer.lex(~s(#available)) == [{:keyword, %{language: :swift}, "#available"}]
     end
+
+    test "punctuation single character" do
+      assert SwiftLexer.lex(~s(?)) == [{:punctuation, %{language: :swift}, 63}]
+    end
+
+    test "punctuation multiple characters" do
+      assert SwiftLexer.lex(~s(->)) == [{:punctuation, %{language: :swift}, "->"}]
+    end
   end
 end
