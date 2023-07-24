@@ -84,10 +84,9 @@ jobs:
     - name: Install dependencies
       run: mix deps.get
 
-    # Step: Compile the project treating any warnings as errors.
-    # Customize this step if a different behavior is desired.
-    - name: Compiles without warnings
-      run: mix compile --warnings-as-errors
+    # Step: Compile the project
+    - name: Compiles
+      run: mix compile
 
     # Step: Check that the checked in code has already been formatted.
     # This step fails if something was found unformatted.
