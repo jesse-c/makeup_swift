@@ -38,6 +38,7 @@ defmodule Makeup.Lexers.SwiftLexer do
   # -----------------------------------------------------------------------------
   # Whitespace
   # -----------------------------------------------------------------------------
+
   whitespace_item = [?\r, ?\s, ?\n, ?\f]
   whitespace = whitespace_item |> ascii_string(min: 1) |> token(:whitespace)
 
