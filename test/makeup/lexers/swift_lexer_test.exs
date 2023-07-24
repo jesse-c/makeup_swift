@@ -106,5 +106,25 @@ defmodule Makeup.Lexers.SwiftLexerTest do
     test "identifier for a reserved word in backticks" do
       assert SwiftLexer.lex(~s(`class`)) == [{:name, %{language: :swift}, '`class`'}]
     end
+
+    test "keyword declaration" do
+      assert SwiftLexer.lex(~s(enum)) == [{:keyword, %{language: :swift}, "enum"}]
+    end
+
+    test "keyword statement" do
+      assert SwiftLexer.lex(~s(continue)) == [{:keyword, %{language: :swift}, "continue"}]
+    end
+
+    test "keyword expression" do
+      assert SwiftLexer.lex(~s(await)) == [{:keyword, %{language: :swift}, "await"}]
+    end
+
+    test "keyword type" do
+      assert SwiftLexer.lex(~s(Any)) == [{:keyword, %{language: :swift}, "Any"}]
+    end
+
+    test "keyword number sign" do
+      assert SwiftLexer.lex(~s(#available)) == [{:keyword, %{language: :swift}, "#available"}]
+    end
   end
 end

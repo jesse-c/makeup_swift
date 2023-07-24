@@ -148,6 +148,28 @@ defmodule Makeup.Lexers.SwiftLexer do
     |> token(:name)
 
   # -----------------------------------------------------------------------------
+  # Keywords
+  # -----------------------------------------------------------------------------
+
+  @keywords_declarations ~w[associatedtype class deinit enum extension fileprivate func import init inout internal let open operator private precedencegroup protocol public rethrows static struct subscript typealias var]
+  @keywords_statements ~w[break case catch continue default defer do else fallthrough for guard if in repeat return throw switch where while]
+  @keywords_expressions_and_types ~w[Any as await catch false is nil rethrows self Self super throw throws true try]
+  @keywords_begin_with_a_number_sign ~w[#available #colorLiteral #elseif #else #endif #if #imageLiteral #keyPath #selector #sourceLocation]
+  @keywords List.flatten([
+              @keywords_declarations,
+              @keywords_statements,
+              @keywords_expressions_and_types,
+              @keywords_begin_with_a_number_sign
+            ])
+
+  keyword =
+    @keywords
+    |> word_from_list()
+    # A naïve way to avoid identifiers of reserved keywords
+    |> lookahead_not(backtick)
+    |> token(:keyword)
+
+  # -----------------------------------------------------------------------------
   # Root
   # -----------------------------------------------------------------------------
 
@@ -160,6 +182,8 @@ defmodule Makeup.Lexers.SwiftLexer do
       # Comments
       inline_comment,
       multiline_comment,
+      # Keywords,
+      keyword,
       # Identifiers
       identifier
     ])
